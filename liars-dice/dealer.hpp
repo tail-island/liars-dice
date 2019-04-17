@@ -1,12 +1,13 @@
 ﻿#pragma once
 
 #include <algorithm>
-#include <execution>
 #include <random>
 #include <unordered_map>
 #include <vector>
 
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 #include <boost/algorithm/cxx11/any_of.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/process.hpp>
@@ -14,7 +15,9 @@
 #include <boost/range/algorithm.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #include "game.hpp"
 #include "program_proxy.hpp"

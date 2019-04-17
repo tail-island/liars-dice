@@ -2,10 +2,14 @@
 
 #include <tuple>
 
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 #include <boost/range/combine.hpp>
 #include <boost/tuple/tuple.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 namespace util {
   // boost::tupleへの対策。C++17のstructured bindingsと相性が悪くて泣きそう……。

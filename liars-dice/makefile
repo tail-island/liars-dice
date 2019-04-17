@@ -4,9 +4,8 @@ TARGET   = liars-dice
 SRCS     = $(shell find . -maxdepth 1 -name *.cpp)
 OBJS     = $(SRCS:%.cpp=%.o)
 DEPS     = $(SRCS:%.cpp=%.d)
-SUBS     = fool hardhead optimist pessimist smart timid yours
 
-all: $(TARGET) $(SUBS)
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $^ $(CXXFLAGS)
@@ -16,10 +15,5 @@ $(TARGET): $(OBJS)
 $(OBJS): %.o: %.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS) -MMD -MP
 
-$(SUBS): FORCE
-	$(MAKE) -C $@ $(MAKECMDGOALS)
-
-FORCE:
-
-clean: $(SUBS)
+clean:
 	$(RM) $(TARGET) $(OBJS) $(DEPS)

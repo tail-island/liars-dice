@@ -1,0 +1,32 @@
+#!/bin/sh
+
+cd liars-dice
+make
+cd ..
+
+cd fool
+make
+cd ..
+
+cd hardhead
+make
+cd ..
+
+cd optimist
+make
+cd ..
+
+cd pessimist
+make
+cd ..
+
+cd timid
+make
+cd ..
+
+cp liars-dice/liars-dice dist/linux-x64/
+cp fool/fool             dist/linux-x64/fool/
+cp hardhead/hardhead     dist/linux-x64/hardhead/
+cp optimist/optimist     dist/linux-x64/optimist/
+cp pessimist/pessimist   dist/linux-x64/pessimist/
+cp timid/timid           dist/linux-x64/timid/

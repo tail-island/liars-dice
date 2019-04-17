@@ -1,11 +1,15 @@
 ﻿#include <iostream>
 #include <random>
 
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 #include <boost/range/adaptors.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/range/numeric.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #include "../liars-dice/program.hpp"
 

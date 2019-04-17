@@ -3,12 +3,16 @@
 #include <string>
 #include <vector>
 
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 #include <boost/filesystem.hpp>  // Ubuntu18.04のGCCだとfilesystemはexperimentalだったので、boost版でいきます。
 #include <boost/range/adaptors.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/iterator_range.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #include "dealer.hpp"
 #include "util.hpp"
@@ -25,7 +29,16 @@ int main(int argc, char** argv) {
     auto result = boost::copy_range<std::vector<std::string>>(
       boost::filesystem::directory_iterator(".") |
       boost::adaptors::filtered([](const auto& directory_entry) { return directory_entry.status().type() == boost::filesystem::directory_file; }) |
-      boost::adaptors::transformed([](const auto& directory_entry) { auto path = directory_entry.path(); path /= "run.bat"; return path; }) |
+      boost::adaptors::transformed(
+        [](const auto& directory_entry) {
+          auto path = directory_entry.path();
+          #ifdef _MSC_VER
+          path /= "run.bat";
+          #else
+          path /= "run";
+          #endif
+          return path;
+        }) |
       boost::adaptors::filtered([](const auto& path) { return boost::filesystem::exists(path); }) |
       boost::adaptors::transformed([](const auto& path) { return path.string(); }));
 

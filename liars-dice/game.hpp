@@ -4,11 +4,15 @@
 #include <unordered_map>
 #include <vector>
 
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 #include <boost/range/adaptors.hpp>
 #include <boost/range/algorithm.hpp>
 #include <boost/range/irange.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #include "util.hpp"
 

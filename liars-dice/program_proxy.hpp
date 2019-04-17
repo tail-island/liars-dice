@@ -5,10 +5,14 @@
 #include <string>
 #include <vector>
 
+#ifdef _MSC_VER
 #pragma warning(push, 0)
+#endif
 #include <boost/asio.hpp>
 #include <boost/process.hpp>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #include "game.hpp"
 #include "json.hpp"
