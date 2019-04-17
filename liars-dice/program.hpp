@@ -39,7 +39,7 @@ namespace liars_dice {
         }
 
         if (command_string == "terminate") {
-          terminate();
+          terminate(); std::cout << "OK" << std::endl;
 
           break;
         }
