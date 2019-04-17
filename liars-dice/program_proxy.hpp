@@ -63,7 +63,15 @@ namespace liars_dice {
         throw std::exception();  // TODO: 専用の例外クラスを作る！
       }
 
-      return future.get();
+      const auto& result = future.get();
+
+      if (result == "") {
+        std::cout << "*** COMMUNICATION ERROR on " << _program_path_string << " ***" << std::endl;
+
+        throw std::exception();  // TODO: 専用の例外クラスを作る！
+      }
+
+      return result;
     }
 
     // auto check_other_programs(const std::vector<career>& careers) {
