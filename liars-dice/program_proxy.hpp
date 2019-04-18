@@ -45,7 +45,7 @@ namespace liars_dice {
       }
 
       _cin << command   << std::endl;
-      _cin << parameter << std::endl;
+      _cin << parameter << std::endl;  // TODO: チューニング！　バッファーが溢れるみたいで、通信相手がJavaだとやたらと遅い……。
 
       auto future = std::async(
         std::launch::async,
@@ -74,9 +74,9 @@ namespace liars_dice {
       return result;
     }
 
-    // auto check_other_programs(const std::vector<career>& careers) {
-    //   call_program("check_other_programs", write_json(careers, std::function(write_careers)), 5000);
-    // }
+    auto check_other_programs(const std::vector<career>& careers) {
+      call_program("check_other_programs", write_json(careers, std::function(write_careers)), 5000);
+    }
 
     auto action(const game& game) {
       return read_json(call_program("action", write_json(game, std::function(write_game)), 500), std::function(read_action));
@@ -87,7 +87,7 @@ namespace liars_dice {
     }
 
     auto terminate() {
-      call_program("terminate", "", 500);
+      _cin.pipe().close();
 
       if (!_child.wait_for(std::chrono::milliseconds(1000))) {
         _child.terminate();

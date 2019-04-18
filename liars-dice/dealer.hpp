@@ -123,7 +123,7 @@ namespace liars_dice {
 
     auto past_games = std::vector<std::tuple<std::unordered_map<program_path_t, program_id_t>, game>>();
 
-    // 他のプログラムの性格診断向けのデータを作成する関数。重い処理なので、敢えて手続き型で書いています。
+    // 他のプログラムの性格診断向けのデータを作成する関数。
     const auto& careers = [&](const auto& program_paths, const auto& program_ids) {
       auto result = std::vector<career>(); result.reserve(std::size(program_paths));
 
@@ -142,6 +142,8 @@ namespace liars_dice {
       }
 
       return result;
+
+      // 重たそうな処理だったので、敢えて手続き型で書いてみました。
     };
 
     // 最後の一人になるまでゲームを繰り返す関数。
@@ -169,18 +171,17 @@ namespace liars_dice {
 
       // 他のプログラムの戦歴をプログラムに通知します。
       [&]() {
-        const auto& command = "check_other_programs";
-        const auto& parameter = [&]() {
+        const auto& careers_ = [&]() {
           const auto& program_ids_ = boost::copy_range<std::vector<program_id_t>>(
             program_paths |
             boost::adaptors::transformed([&](const auto& program_path) { return program_ids.at(program_path); }));
 
-          return write_json(careers(program_paths, program_ids_), std::function(write_careers));
+          return careers(program_paths, program_ids_);
         }();
 
         for (const auto& program_path: program_paths) {
           try {
-            program_proxies.at(program_path)->call_program(command, parameter, 5000);
+            program_proxies.at(program_path)->check_other_programs(careers_);
 
           } catch (...) {
             if (program_dice_counts.at(program_path) > 0) {
@@ -188,8 +189,6 @@ namespace liars_dice {
             }
           }
         }
-
-        // パフォーマンスのために、program_proxy::call_programを直接使用します。こうしないと、JSONのエンコードが何回も走っちゃう。
       }();
 
       // 最後の一人になるまでゲームを繰り返します。

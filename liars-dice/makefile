@@ -5,8 +5,6 @@ SRCS     = $(shell find . -maxdepth 1 -name *.cpp)
 OBJS     = $(SRCS:%.cpp=%.o)
 DEPS     = $(SRCS:%.cpp=%.d)
 
-all: $(TARGET)
-
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $^ $(CXXFLAGS)
 

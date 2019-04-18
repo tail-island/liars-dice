@@ -37,12 +37,6 @@ namespace liars_dice {
 
           continue;
         }
-
-        if (command_string == "terminate") {
-          terminate(); std::cout << "OK" << std::endl;
-
-          break;
-        }
       }
     }
   };
