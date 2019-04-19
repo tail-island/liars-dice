@@ -367,6 +367,15 @@ namespace liars_dice {
         boost::adaptors::transformed([&](const auto& program_path) { return program_evaluations.at(program_path).value(); }));
     };
 
-    return play_sets(program_path_strings);
+    const auto& result = play_sets(program_path_strings);
+
+    // あとで何かに使えるかもしれないので、全ての試合を記録しておきます。
+    [&]() {
+      auto ofstream = std::ofstream("all-games.json");
+      ofstream << write_json(past_games, std::function(write_past_games));
+      ofstream.close();
+    }();
+
+    return result;
   }
 }

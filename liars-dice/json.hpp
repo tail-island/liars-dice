@@ -115,6 +115,28 @@ namespace liars_dice {
     writer.EndArray();
   }
 
+  inline auto write_past_games(const std::vector<std::tuple<std::unordered_map<std::string, std::string>, game>>& past_games, rapidjson::Writer<rapidjson::StringBuffer>& writer) noexcept {
+    writer.StartArray();
+    for (const auto& [program_path_and_program_ids, game]: past_games) {
+      writer.StartObject();
+      writer.Key("programs");
+      writer.StartArray();
+      for (const auto& [program_path, program_id]: program_path_and_program_ids) {
+        writer.StartObject();
+        writer.Key("path");
+        writer.String(program_path.c_str());
+        writer.Key("id");
+        writer.String(program_id.c_str());
+        writer.EndObject();
+      }
+      writer.EndArray();
+      writer.Key("game");
+      write_game(game, writer);
+      writer.EndObject();
+    }
+    writer.EndArray();
+  }
+
   template<class T>
   inline auto write_json(const T& t, const std::function<void(const T&, rapidjson::Writer<rapidjson::StringBuffer>&)>& write_t) noexcept {
     auto string_buffer = rapidjson::StringBuffer();
