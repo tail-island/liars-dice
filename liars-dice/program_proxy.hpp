@@ -88,12 +88,10 @@ namespace liars_dice {
 
     auto terminate() {
       _cin.pipe().close();
-      _child.wait();
 
-      // 以下のコードの方が正しいのですけど、Ubuntu19.04 + boost1.67だと正常に動作しなかった……。
-      // if (!_child.wait_for(std::chrono::milliseconds(1000))) {
-      //   _child.terminate();
-      // }
+      if (!_child.wait_for(std::chrono::milliseconds(500))) {  // Ubuntu19.04 + boost 1.67だと、必ず500msec待った挙げ句にfalseを返しやがる……。この3行をコメントアウトしてください。
+        _child.terminate();
+      }
     }
 
     std::string cerr() noexcept {
