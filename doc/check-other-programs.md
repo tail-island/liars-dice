@@ -72,7 +72,7 @@ csharpとjavaは、アルゴリズム的にはhardheadと同じなのでhardhead
 
 もちろんこれには秘密があって、ディープ・ラーニングのライブラリが作業の殆どを受け持ってくれているからなんです。特に、私が愛用しているKerasは素晴らしい！　関数型プログラミング・ライブラリのfuncyと組み合わせると、ニューラル・ネットワークを宣言的に記述できてとても簡単なんです。こんな感じ。
 
-~~~ python:train.py
+~~~ python
 from data_set           import *
 from funcy              import *
 from keras.callbacks    import LearningRateScheduler
@@ -102,6 +102,7 @@ def computational_graph():
 # 関数型プログラミングで書いたので、馴染みがないとかえって分かりづらいかもしれません……。
 # そんな時は薄目で見て、computational_graph()はdense→relu→dense→...→softmaxという処理を定義しているんだなぁと考えてください。
 ~~~
+[train.py](https://github.com/tail-island/liars-dice-analyzer/blob/master/train.py)
 
 でも、このコードを見せられても、今回がたまたま簡単なだけだと感じるかもしれません。が、ご安心ください。ディープ・ラーニングの最先端を切り開いて名を上げるというような高尚な目的がある人はともかく、私のようなディープ・ラーニングを応用して現実の問題を楽に解きたいなぁという程度なら、`dense`で実現している全結合層以外で覚えなければならないのは、あとは畳み込み層（Convolution）だけ。深層学習って、全結合層と畳み込み層を使えればほぼオッケーってくらいに道具立てが少ないんですよ。で、この少ない道具の使い方も、すごい学者さんがいろいろ考えて定跡を考案済みです。[ResNet](https://github.com/tail-island/try-residual-net)とかね。その定跡を、Kerasの楽ちんライブラリで実装するだけ。というか、コピー＆ペーストして、余裕があったらパラメーターをいじる程度という……。ほとんどの場合で、入力と出力のデータを作るコードより、ディープ・ラーニング部分のコードの方が楽なんですよ。
 
@@ -132,7 +133,7 @@ def relu(float x):
 
 その学習させる部分のコードは、以下の通り。
 
-~~~ python:train.py
+~~~ python
 def main():
     (x, y), (validation_x, validation_y) = load_data()
 
@@ -147,6 +148,7 @@ def main():
 # まぁ、私も、このコードは毎回コピー＆ペーストで使いまわしていて、もはや中身を読んですらいなかったのですけど。
 # 今回、中身を解説するために、久しぶりにコードを読み解きました……。
 ~~~
+[train.py](https://github.com/tail-island/liars-dice-analyzer/blob/master/train.py)
 
 `load_data()`で読み込んだデータを、変数`x`（入力）と`y`（出力）、`validation_x`と`vlaidation_y`（検証用）に設定します。先程作成したニューラル・ネットワークを生成する`computational_graph()`の戻り地を使って、`Model`を作成します。`model.summary()`はモデルの情報の出力です。以下のような感じで、ニューラル・ネットワークの情報が出力されます。
 
@@ -222,7 +224,7 @@ Epoch 150/150
 
 というわけで、以下のコードを書いてみました。
 
-~~~ python:check.py
+~~~ python
 def main():
     _, (validation_x, validation_y) = load_data()
 
@@ -255,6 +257,7 @@ def main():
     # 精度を出力します。
     print('accuracy = {}'.format(c / t))
 ~~~
+[check.py](https://github.com/tail-island/liars-dice-analyzer/blob/master/train.py)
 
 検証用データをいろいろやって、答え単位でまとめた配列を作って`xs`に入れます。`model.predict()`で複数の`x`をまとめて予測して、`np.argmax`で予測結果（確率の配列）を数値に変換して、`mode()`で最頻値に変換します。で、正解した回数`c`を試した回数`t`で割って、精度として出力しています。プログラムを動かしてみましょう。
 
