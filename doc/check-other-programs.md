@@ -9,9 +9,9 @@
 以下の手順で、プログラムを動かすことができます。
 
 1. Python 3.6以降をインストール
-2. pip3 install tensorflow keras funcy h5py
-3. python3 train.py
-4. python3 check.py
+2. pip install tensorflow keras funcy h5py
+3. python train.py
+4. python check.py
 
 最後にどれだけ判定できたかがaccuracy = *n*で表示されます。もしaccuracy = 1.0と表示されたら、すべてを正しく判別できたということになります。
 
@@ -72,7 +72,7 @@ csharpとjavaは、アルゴリズム的にはhardheadと同じなのでhardhead
 
 もちろんこれには秘密があって、ディープ・ラーニングのライブラリが作業の殆どを受け持ってくれているからなんです。特に、私が愛用しているKerasは素晴らしい！　関数型プログラミング・ライブラリのfuncyと組み合わせると、ニューラル・ネットワークを宣言的に記述できてとても簡単なんです。こんな感じ。
 
-~~~ python
+~~~ python:train.py
 from data_set           import *
 from funcy              import *
 from keras.callbacks    import LearningRateScheduler
@@ -132,7 +132,7 @@ def relu(float x):
 
 その学習させる部分のコードは、以下の通り。
 
-~~~ python
+~~~ python:train.py
 def main():
     (x, y), (validation_x, validation_y) = load_data()
 
@@ -222,7 +222,7 @@ Epoch 150/150
 
 というわけで、以下のコードを書いてみました。
 
-~~~ python
+~~~ python:check.py
 def main():
     _, (validation_x, validation_y) = load_data()
 
