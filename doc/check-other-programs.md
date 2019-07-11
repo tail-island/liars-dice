@@ -8,7 +8,7 @@
 
 以下の手順で、プログラムを動かすことができます。
 
-1. Python 3.6以降をインストール
+1. Python 3.6以降の64bit版をインストール
 2. pip install tensorflow keras funcy h5py
 3. python train.py
 4. python check.py
