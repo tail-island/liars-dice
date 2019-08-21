@@ -29,12 +29,12 @@ public:
     const auto& faces = game.players()[game.player_index()].faces();
 
     const auto& secret_dice_count = (
-      boost::accumulate(game.players() | boost::adaptors::transformed([](const auto& player) { return std::size(player.faces()); }), 0) -
+      boost::accumulate(game.players() | boost::adaptors::transformed([](const auto& player) { return static_cast<int>(std::size(player.faces())); }), 0) -
       static_cast<int>(std::size(faces)));
 
     const auto& estimated_face_counts = boost::copy_range<std::vector<int>>(
       boost::irange(2, 7) |
-      boost::adaptors::transformed([&](const auto& face) { return std::round(secret_dice_count / 3.0f) + game.face_count(face); }));
+      boost::adaptors::transformed([&](const auto& face) { return static_cast<int>(std::round(secret_dice_count / 3.0f)) + game.face_count(face); }));
 
     if (!std::empty(game.players()[game.previous_player_index()].actions())) {
       const auto& previous_bid = game.players()[game.previous_player_index()].actions().back().bid().value();

@@ -75,15 +75,15 @@ namespace liars_dice {
     }
 
     auto check_other_programs(const std::vector<career>& careers) {
-      call_program("check_other_programs", write_json(careers, std::function(write_careers)), 5000);
+      call_program("check_other_programs", write_json(careers, std::function(write_careers)), 40000);
     }
 
     auto action(const game& game) {
-      return read_json(call_program("action", write_json(game, std::function(write_game)), 500), std::function(read_action));
+      return read_json(call_program("action", write_json(game, std::function(write_game)), 2000), std::function(read_action));
     }
 
     auto game_end(const game& game) {
-      call_program("game_end", write_json(game, std::function(write_game)), 500);
+      call_program("game_end", write_json(game, std::function(write_game)), 2000);
     }
 
     auto terminate() {

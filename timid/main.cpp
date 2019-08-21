@@ -34,7 +34,7 @@ public:
       const auto& faces = game.players()[game.player_index()].faces();
 
       const auto& secret_dice_count = (
-        boost::accumulate(game.players() | boost::adaptors::transformed([](const auto& player) { return std::size(player.faces()); }), 0) -
+        boost::accumulate(game.players() | boost::adaptors::transformed([](const auto& player) { return static_cast<int>(std::size(player.faces())); }), 0) -
         static_cast<int>(std::size(faces)));
 
       const auto& previous_bid = game.players()[game.previous_player_index()].actions().back().bid().value();

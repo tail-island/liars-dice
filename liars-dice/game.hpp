@@ -200,7 +200,7 @@ namespace liars_dice {
         return;
       }
 
-      _player_index = (player_index() + 1) % std::size(players());
+	  _player_index = (player_index() + 1) % std::size(players());
     }
 
     auto is_end() const noexcept {

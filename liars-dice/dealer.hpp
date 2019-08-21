@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
 #include <random>
 #include <unordered_map>
 #include <vector>
