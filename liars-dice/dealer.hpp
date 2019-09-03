@@ -186,9 +186,9 @@ namespace liars_dice {
             program_proxies.at(program_path)->check_other_programs(careers_);
 
           } catch (...) {
-            program_dice_counts[program_path] = 0;
+            // program_dice_counts[program_path] = 0;
 
-            losers_collection.emplace_back(std::vector<program_path_t>{program_path});
+            // losers_collectionの管理が大変なので、ごめんなさい、ペナルティなしで……。
           }
         }
       }();
@@ -303,7 +303,6 @@ namespace liars_dice {
               }
             }
 
-            std::cout << "*** WHY THIS EXCEPTION? ***" << std::endl;
             throw std::exception();
           }));
     };
