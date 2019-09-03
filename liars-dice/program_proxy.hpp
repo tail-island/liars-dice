@@ -89,9 +89,9 @@ namespace liars_dice {
     auto terminate() {
       _cin.pipe().close();
 
-      // if (!_child.wait_for(std::chrono::milliseconds(500))) {  // Ubuntu19.04 + boost 1.67だと、必ず500msec待った挙げ句にfalseを返しやがる……。この3行をコメントアウトしてください。
-      //   _child.terminate();
-      // }
+      if (!_child.wait_for(std::chrono::milliseconds(500))) {  // Ubuntu19.04 + boost 1.67だと、必ず500msec待った挙げ句にfalseを返しやがる……。この3行をコメントアウトしてください。
+        _child.terminate();
+      }
     }
 
     std::string cerr() noexcept {
