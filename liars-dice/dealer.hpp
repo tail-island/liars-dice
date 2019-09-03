@@ -273,7 +273,9 @@ namespace liars_dice {
       // プログラムを終了させます。
       for (const auto& program_path: program_paths) {
         try {
+          std::cout << "*** TERMINATING: " << program_path << std::endl;
           program_proxies.at(program_path)->terminate();
+          std::cout << "*** TERMINATED" << std::endl;
 
         } catch (...) {
           ;
