@@ -88,17 +88,17 @@ namespace liars_dice {
     std::cout << std::endl;
   }
 
-  inline auto show_scores(const std::vector<std::string>& program_path_strings, const std::vector<float>& scores) noexcept {
+  inline auto show_scores(const std::vector<std::string>& program_path_strings, const std::vector<float>& scores, const std::vector<int>& set_counts) noexcept {
     std::cout << "# Scores" << std::endl;
     std::cout << std::endl;
 
-    auto program_path_string_and_scores = boost::copy_range<std::vector<std::tuple<std::string, float>>>(util::combine(program_path_strings, scores));
+    auto program_path_string_and_score_and_set_counts = boost::copy_range<std::vector<std::tuple<std::string, float, int>>>(util::combine(program_path_strings, scores, set_counts));
 
-    boost::sort(program_path_string_and_scores, [](const auto& program_path_string_and_score_1, const auto& program_path_string_and_score_2) { return std::get<1>(program_path_string_and_score_1) < std::get<1>(program_path_string_and_score_2); });
-    boost::reverse(program_path_string_and_scores);
+    boost::sort(program_path_string_and_score_and_set_counts, [](const auto& program_path_string_and_score_and_set_count_1, const auto& program_path_string_and_score_and_set_count_2) { return std::get<1>(program_path_string_and_score_and_set_count_1) < std::get<1>(program_path_string_and_score_and_set_count_2); });
+    boost::reverse(program_path_string_and_score_and_set_counts);
 
-    for (const auto& [program_path_string, score]: program_path_string_and_scores) {
-      std::cout << program_path_nickname(program_path_string) << "\t" << std::fixed << std::setprecision(3) << score << std::defaultfloat << std::endl;
+    for (const auto& [program_path_string, score, set_count]: program_path_string_and_score_and_set_counts) {
+      std::cout << program_path_nickname(program_path_string) << "\t" << std::fixed << std::setprecision(3) << score << std::defaultfloat << "\t" << set_count << std::endl;
     }
 
     std::cout << std::endl;
@@ -360,7 +360,11 @@ namespace liars_dice {
             program_paths |
             boost::adaptors::transformed([&](const auto& program_path) { return program_evaluations.at(program_path).value(); }));
 
-          show_scores(program_paths, scores);
+          const auto& set_counts = boost::copy_range<std::vector<int>>(
+            program_paths |
+            boost::adaptors::transformed([&](const auto& program_path) { return program_evaluations.at(program_path).set_count(); }));
+
+          show_scores(program_paths, scores, set_counts);
         }();
       }
 
